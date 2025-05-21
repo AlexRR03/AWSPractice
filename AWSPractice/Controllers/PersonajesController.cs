@@ -1,4 +1,5 @@
-﻿using AWSPractice.Models;
+﻿using AWSPractice.Helper;
+using AWSPractice.Models;
 using AWSPractice.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,9 +8,11 @@ namespace AWSPractice.Controllers
     public class PersonajesController : Controller
     {
         private Repository repo;
-        public PersonajesController(Repository repo)
+        private HelperBuckets helper;
+        public PersonajesController(Repository repo, HelperBuckets helper)
         {
             this.repo = repo;
+            this.helper = helper;
         }
         public async Task<IActionResult> Index()
         {
@@ -31,10 +34,10 @@ namespace AWSPractice.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(Personaje personaje)
+        public async Task<IActionResult> Create(Personaje personaje, IFormFile imagen)
         {
             
-            await this.repo.AddPersonajeAsync(personaje.Nombre,personaje.Posicion,personaje.Fecha,personaje.Imagen);
+            await this.repo.AddPersonajeAsync(personaje.Nombre,personaje.Posicion,personaje.Fecha,imagen);
             return RedirectToAction("Index");    
         }
         public async Task<IActionResult> Edit(int id)

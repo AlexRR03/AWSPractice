@@ -1,4 +1,6 @@
+using Amazon.S3;
 using AWSPractice.Data;
+using AWSPractice.Helper;
 using AWSPractice.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 string conectionString = builder.Configuration.GetConnectionString("MySql");
 builder.Services.AddDbContext<PersonajesContext>(options =>
     options.UseMySQL(conectionString));
+builder.Services.AddTransient<HelperBuckets>(); 
+builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddTransient<Repository>();
 builder.Services.AddControllersWithViews();
 

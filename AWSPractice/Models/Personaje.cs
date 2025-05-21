@@ -19,5 +19,9 @@ namespace AWSPractice.Models
         [Column("IMAGEN")]
         public string Imagen { get; set; }
 
+        [NotMapped]
+        public string ImagenUrl => "https://s3.amazonaws.com/bucket-test-arr/" + Imagen;
+
+
     }
 }
